@@ -1,0 +1,5 @@
+Apache airflow is an open-source workflow management platform. 
+Airflow can be defined as a platform for defining, executing and monitoring workflows.
+A workflow can be defined as any sequence of steps taken to accomplish a particular goal.
+DAG - Directed Acyclic Graph are written in Python language.
+
