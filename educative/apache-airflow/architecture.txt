@@ -19,7 +19,5 @@ Executor determines how the work gets done. Default executor is SequentialExecut
 single task at any given time.
 
 ---------------- Database --------------------------------------------------------------------------------------------
-
 Airflow uses SQLAlchemy and ORM to connect to metadata database. Any Database supported SQLAlchemy can be used to
 store all Airflow metadata.
-
