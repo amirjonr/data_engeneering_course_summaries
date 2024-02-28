@@ -17,27 +17,37 @@ default_args = {
 }
 
 
-def greetName(name):
+def greet_name(ti):
+    name = ti.xcom_pull(task_ids='task1', key='name')
     print(f"Hello {name}!")
 
 
+def get_name(ti):
+    ti.xcom_push(key='name', value='Amirjon')
+
+
 with DAG(
-        dag_id="ExampleV1Dag",
+        dag_id="ExampleV3Dag",
         schedule_interval='@once',
         description='This is my first DAG',
         default_args=default_args,
 ) as dag:
-    pyton_operator1 = PythonOperator(
-        task_id='pyton_operator1',
-        python_callable=greetName,
-        op_kwargs={"name": "Amirjon"},
+    task1 = PythonOperator(
+        task_id='task1',
+        python_callable=get_name,
         dag=dag,
     )
 
-    bash_operator1 = BashOperator(
-        task_id='bash_operator1',
-        bash_command='pwd',
+    task2 = PythonOperator(
+        task_id='task2',
+        python_callable=greet_name,
         dag=dag,
     )
 
-    pyton_operator1 >> bash_operator1
+    task3 = BashOperator(
+        task_id='task3',
+        bash_command='echo {{ ti.xcom_pull(task_ids="task1", key="name") }}',
+        dag=dag,
+    )
+
+    task1 >> [task3, task2]
