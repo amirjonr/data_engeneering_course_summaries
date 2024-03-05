@@ -1,0 +1,51 @@
+What is ETL?
+  - is the process of data migration from one storage to another.
+
+When you have to use it?
+  - when u have multiple services, but want to analyze it single storage.
+
+ETL
+ - Extract
+ - Transform
+ - Load
+Example:
+ 0. services(crm, cbs, alifshop) -> script.py -> DWH (data warehouse) -> statistics
+
+
+ELT
+ - Extract
+ - Load
+ - Transform
+Example:
+ 0. services(crm, cbs, alifshop) -> DWH (data warehouse) -> script.py(transform) -> statistics
+
+
+ Principles of creating pipeline:
+  - clean code (PEP8)
+  - simplicity (understandable)
+  - uniformity (al dags are same)
+  - execution time of pipeline (if daily process takes more than 1 day)
+  - work only with replica (not with master)
+  - optimize data collection (indexes, etc.)
+  - less network traffic (select only necessary data)
+  - partition
+  - delete non-actual pipelines
+  - idempotent
+
+
+Be ready:
+ - lack of integrity
+ - problem with connection
+ - unplanned changes
+ - pipeline delay
+
+Why Airflow?
+ - Open source
+ - great doc
+ - code in python
+ - UI
+ - alerting and monitoring
+ - work with different tools
+ - customizations
+ - big community
+

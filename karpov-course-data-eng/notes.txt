@@ -1,0 +1,1 @@
+- see explain and explain analyze in Postgres (in mpp db too)
