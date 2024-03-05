@@ -6,12 +6,11 @@ from airflow import DAG
 from airflow.hooks.base import BaseHook
 from airflow.models import BaseOperator
 from airflow.utils.dates import days_ago
-import pendulum
 
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': pendulum.today('UTC+5'),
+    'start_date': days_ago(1),
     'email': ['amirshorakhimov0017@gmail.com'],
     'email_on_failure': False,
     'email_on_retry': False,
@@ -23,7 +22,7 @@ dag = DAG(
     dag_id='test_hook_v4',
     default_args=default_args,
     description='Test DAG for hooks and connections',
-    schedule='@once',
+    schedule_interval='@once',
 )
 
 log = logging.getLogger(__name__)
