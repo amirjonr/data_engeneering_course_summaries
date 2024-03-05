@@ -1,0 +1,14 @@
+Airflow main components:
+ - WebServer (UI, dags, statuses)
+ - Scheduler (analyze dags, run dags, queue tasks)
+ - Executor (executes task instances, CeleryExecutor, KubernetesExecutor):
+          - Can be:
+             - Local
+             - Non-local
+ - Worker (process that task executes, can be in local or remote machine)
+ - Metadata Database (information about our pipeline: DAG, DAG run, task instance, task, variable, connection, XCom)
+
+
+Webserver -> (Metadata, DAG directory)
+Workers -> (Metadata, DAG directory)
+Scheduler( and Executor) -> (Metadata, DAG directory, worker)
