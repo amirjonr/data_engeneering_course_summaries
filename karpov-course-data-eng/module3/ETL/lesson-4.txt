@@ -1,0 +1,27 @@
+XCOM - cross_communication - message exchange between dags(tasks), max size is 48 kb
+ - xcom_push
+ - xcom_pull
+
+Alternative XCOM is Taskflow API
+
+
+Sub_dags:
+ - for grouping tasks,
+ - for reuse pipeline.
+
+ alternative is TaskGroup.
+
+ how to crate dag dynamically.
+  all dags in DAG_FOLDER,
+  dag in globals()
+
+   - generate from json/yaml file,
+   - generate from global variables/connections
+   - statical generation many same dags
+
+ Airflow best practice:
+ - Idempotent,
+ - Don't save pass in code (use connections),
+ - Don't save temp file locally, (use s3, hdfs)
+ - Delete unnecessary code (all logic in tasks)
+ - Don't use airflow vars (use in jinja, env or inside tasks)
