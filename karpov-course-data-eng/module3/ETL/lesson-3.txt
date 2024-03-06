@@ -1,0 +1,90 @@
+default_args = {
+    'owner': 'amirjon'  # owner,
+    'queue': 'amirjon_queue'  # in which worker execute dag(task)
+    'email': ['amirshorakhimov0017@gmail.com'],  # send email
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'depends_on_past': False,  # task A will run in this task instance only if task A of previous task instance is done,
+    'wait_for_downstream': False,
+    'retries': 3, # will run 4 times (main and retries),
+    'retry_delay': timedelta(minutes=5),
+    'priority_weight': 10,
+    'start_date': datetime(2021, 1, 1),   # date of first run
+    'end_date': datetime(2025, 1, 1),     # date of last run,
+    'catch_up': False, # creates only 1 instance even id start date is 10 days ago,
+    'sla': timedelta(hours=2), # task will end in this time
+    'execution_timeout': timedelta(seconds=300), will fail after 300 sec if not done yet,
+    'on_failure_callback': some_function,
+    'on_success_callback': some_other_function,
+    'on_retry_callback': another_function,
+    'sla_miss_callback': yet_another_function,
+    'trigger_rule': 'all_success'
+}
+
+
+trigger rules - state of upstream tasks for running this task:
+ - all_success,
+ - all_failed,
+ - all_done, (all is done, does not matter it skipped, failed or succeed)
+ - one_failed,
+ - one_success,
+ - none_failed,
+ - none_failed_or_skipped,
+ - none_skipped,
+ - dummy (runs all time)
+
+
+Hooks - interfaces for connections:
+ - S3Hook,
+ - DockerHook,
+ - HttpHook,
+ - MysqlHook,
+ - OracleHook,
+ - PostgresHook
+ - etc .........
+
+ Operators - templates with parameters for tasks:
+  - BashOperator,
+  - EmailOperator,
+  - PostgresOperator,
+  - SimpleHttpOperator,
+  - SlackAPIOperator,
+  - PythonOperator,
+  - TriggerDagRunOperator.
+
+ Sensors - wait until some condition:
+  - timeout,
+  - soft_fail, # sensor state will be skipped, not failed, it helps run downstream tasks,
+  - poke_interval,  # time to check if condition met,
+  - mode: poke | reschedule # не освобождает воркер | освобождает воркер,
+  - smart_sensor, sensor runs in another worker.
+
+   List of sensors:
+    - ExternalTaskSensor,
+    - SqlSensor, # if data exist for today
+    - TimeDeltaSensor, # wait a time after dag run
+    - PythonSensor, if function returns true
+
+ Branching:
+  - BranchPythonOperator, # function have to return task id for running task, otherwise task will be skipped
+  - ShortCircuitOperator, # returns bool, if true downstream tasks will run
+  - BranchDateTimeOperator, # if exe_date in date range
+
+ Templates Jinja t: {{ }}:
+ - {{ ds }} - execution_date (YYYY-MM-DD),
+ - {{ ts }} - execution_date with timestamp,
+ - {{ ds_nodash }} - exe_date YYYYMMDD,
+ - {{ yesterday_ds }} - day ago from exe_date,
+ - {{ tomorrow_ds }} - day ago from exe_date,
+ - {{ var.my_var }} - get global var,
+ - {{ conf }} - airflow.cfg.
+
+ Macros:
+  - macros.datetime,
+  - macros.uuid,
+  - macros.random,
+  - etc.... .
+
+  Custom macros with function, and use it in dag parameter: user_defined_macros={'my_macros': some_func}
+  and use it like: bash_command='echo {{ my_macros }}'
+
