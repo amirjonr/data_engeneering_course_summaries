@@ -37,6 +37,9 @@ class RamSpeciesCountOperator(BaseOperator):
                 raise AirflowException('Error in load from Rick&Morty API')
         logging.info('{} count in Rick&Morty: {}'.format(self.species_type, species_count))
 
+    def on_kill(self) -> None:
+        logging.info('here we killed opened resources')
+
     def get_page_count(self, api_url):
         """
         Get count of page in API
