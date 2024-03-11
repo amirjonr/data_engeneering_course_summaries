@@ -1,0 +1,32 @@
+Airflow extensions:
+ - operators, sensors, hooks,
+ - macros,
+ - hooks in interface connections,
+ - menu in ui,
+ - custom xcom backend,
+ - custom executor,
+ - flask blueprints and view
+
+
+Create custom operator, if one logic od some task can be reused
+What we need to create operator:
+ - extend BaseOperator and create methods:
+    - __init__(),
+    - execute(),
+    - on_kill()
+
+Create custom Hook for encapsulating low-level-code:
+ - stateless,
+ - extend from BaseHook,
+ - __init__(),
+ Call only from:
+  - execute(),
+  - poke(),
+  - PythonOperator().
+
+
+Sensor:
+ - extend from BaseSensorOperator
+ - __init__()
+ - poke()
+ - @poke_mode_only()  #do not free worker
