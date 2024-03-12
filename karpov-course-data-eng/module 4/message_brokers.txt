@@ -1,0 +1,10 @@
+Message Broker - is an architecture pattern in distributed systems:
+ - point-to-point (like queue)
+ - publish/subscribe
+
+                MessageBroker
+ Producer1 ->   Topic1/Queue1    <- Consumer1
+ Producer2 ->   Topic2/Queue2    <- Consumer1
+ Producer3 ->   Topic2/Queue2    <- Consumer2
+  .......  Many To Many Rel
+
