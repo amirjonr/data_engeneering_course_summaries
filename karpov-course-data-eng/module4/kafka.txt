@@ -1,0 +1,34 @@
+Kafka - from LinkedIn company (open sourced in 2011)
+works by publish/subscribe model
+data saves in topics
+
+Main entities of Kafka:
+ - topics (queues):
+     - append-only queue of messages (cannot delete)
+     - consist of 1+ partitions
+ - partitions:
+     - for paralleling queries in topic
+     - consist of segments
+ - segments:
+     - file in filesystem
+     - data saves in segments
+     - every partition has only one active segment
+     - segment limit
+ - message:
+     - header:
+         - topic + partition + offset + timestamp
+         - additional header[]
+     - body:
+         - key - byte[]
+         - value - byte[]
+ - broker:
+   - serves topic partitions
+   - can use replications (leader + follower)
+
+ - log retention (clean aol data):
+   - time based
+   - size based
+ - cleanup policy:
+   - DELETE
+   - COMPACT
+   - DELETE and COMPACT
