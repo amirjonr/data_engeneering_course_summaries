@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/dbt/data_pipeline/models/staging/stg_tpch_line_items.sql" dialect="Snowflake" />
+    <file url="file://$PROJECT_DIR$/dbt/data_pipeline/models/staging/stg_tpch_orders.sql" dialect="SQLite" />
+    <file url="PROJECT" dialect="Snowflake" />
+  </component>
+</project>
