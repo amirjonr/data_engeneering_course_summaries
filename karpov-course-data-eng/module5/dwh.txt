@@ -104,3 +104,29 @@ Core Layer обязателен
 
 users -> (OLTP) - > Data Lake -> DWH -> (Reports, data vizual-n, analyt)
 Стрелочки (->) это ETL процессы.
+Пакетная и Потоковая обработка ETL процессов.
+
+Пакетная:
+ - данные доставляются с задрежкой
+ - простая разработка и тестирование
+ - высокая эффективность для OLAP систем
+ - пиковая нагрузка на железо
+
+Потоковая:
+ - результать в режиме реального времени
+ - сложная разработка и тестирование
+ - низкая эффектиновсть для OLAP систем
+ - равномерная нагрузка на железо
+
+Lambda architecture:
+
+              real-time layer (stream process) -> (real time views)
+    new logs ->                                                                         -> data access
+              batch layer (primary data layer -> core layer) -> (data mart layer)
+
+
+Kappa architecture:
+  new logs-> real-time layer (stream process) -> (real time views) -> data access
+
+
+###############################################################################################################
