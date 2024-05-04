@@ -184,3 +184,29 @@ Moдeл "Снежинка":
     Кумулятивные снапшоты - итоговое состояние на данный момент времени, промежуточные итоги.
   Например, продажи этого года на определенную дату.
 
+Таблицы измерений:
+ - dimensional tabel or dim table, таблица которая содержит атрибуты событий, сохраненных в таблице фактов,
+   и имеет первичный ключ и атрибуты.
+
+   Характеристики:
+       содержат данные о детализации фактов
+       содержат атрибуты фактов
+       как правило в них есть много полей
+       меньше строк чем в таблице фактов
+       обычно используется при визуализации данных в отчетах и запросах
+   Виды:
+       Медленно меняющимся измерениями (SCD - Slowly Changing Dimensions) - таблицы в которых
+       некоторые атрибуты могут изменить свои значения по истечении некоторого периода времени
+       Всего существует 8 видов SCD, которые определяют как история изменений должна
+       быть сохранена.
+       Быстро меняющимся измерениями - (Fast Changing Dimensions) - измерения разбиваются на две
+       сущности, один из них содержит аттрибуты которые меняются быстро, а другие медленно.
+
+   Виды SCD:
+   0) No change to attribute value - original value only
+   1) Overwrite attribute value - only current value
+   2) Add new dimension row to profile with new attribute value - add new row
+   3) Add new column to preserve attribute's current and prior values - add column for prior values
+   4) Add mini-dimensional table containing rapidly changing attributes
+   6) Combinations of scd1 + scd2 + scd3
+
