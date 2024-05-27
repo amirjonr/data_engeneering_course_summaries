@@ -89,17 +89,14 @@ services:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
-    volumes:
-      - postgres-db-volume:/var/lib/postgresql/data
+#    volumes:
+#      - postgres-db-volume:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s
       retries: 5
       start_period: 5s
     restart: always
-    networks:
-      cable:
-        ipv4_address: 172.25.0.2
 
   redis:
     image: redis:latest
@@ -112,9 +109,6 @@ services:
       retries: 50
       start_period: 30s
     restart: always
-    networks:
-      cable:
-        ipv4_address: 172.25.0.3
 
   airflow-webserver:
     <<: *airflow-common
@@ -132,9 +126,6 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
-    networks:
-      cable:
-        ipv4_address: 172.25.0.4
 
   airflow-scheduler:
     <<: *airflow-common
@@ -150,9 +141,6 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
-    networks:
-      cable:
-        ipv4_address: 172.25.0.5
 
   airflow-worker:
     <<: *airflow-common
@@ -176,9 +164,6 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
-    networks:
-      cable:
-        ipv4_address: 172.25.0.6
 
   airflow-triggerer:
     <<: *airflow-common
@@ -194,9 +179,6 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
-    networks:
-      cable:
-        ipv4_address: 172.25.0.7
 
   airflow-init:
     <<: *airflow-common
@@ -261,9 +243,6 @@ services:
     user: "0:0"
     volumes:
       - ${AIRFLOW_PROJ_DIR:-.}:/sources
-    networks:
-      cable:
-        ipv4_address: 172.25.0.8
 
   airflow-cli:
     <<: *airflow-common
@@ -277,9 +256,6 @@ services:
       - bash
       - -c
       - airflow
-    networks:
-      cable:
-        ipv4_address: 172.25.0.9
 
   # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
   # or by explicitly targeted on the command line e.g. docker-compose up flower.
@@ -302,15 +278,3 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
-    networks:
-      cable:
-        ipv4_address: 172.25.0.10
-
-volumes:
-  postgres-db-volume:
-networks:
-  cable:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.25.0.0/24
